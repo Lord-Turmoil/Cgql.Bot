@@ -32,6 +32,7 @@ public class WebhookController : BaseController<WebhookController>
         try
         {
             ScanTask task = await _repoService.RequestNewTaskAsync(request, installerId);
+            _service.AddTask(task);
             return new OkResponse(new OkDto(data: _mapper.Map<ScanTask, WebhookResponse>(task)));
         }
         catch (Exception e)

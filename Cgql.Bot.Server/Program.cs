@@ -1,6 +1,7 @@
 using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
 using Cgql.Bot.Model.Database;
+using Cgql.Bot.Server.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Tonisoft.AspExtensions.Cors;
 using Tonisoft.AspExtensions.Module;
@@ -36,7 +37,8 @@ public class Program
         builder.AddCors(CorsOptions.CorsSection);
 
         // Add Background Task.
-        // TODO:
+        builder.Services.AddSingleton<IScanDaemon, ScanDaemon>();
+        builder.Services.AddHostedService(provider => provider.GetRequiredService<IScanDaemon>());
 
         WebApplication app = builder.Build();
 
