@@ -63,6 +63,7 @@ public class Program
         Configuration.BotId = builder.Configuration["BotId"] ?? throw new ArgumentNullException("BotId");
         Configuration.Profile = builder.Configuration["Profile"] ?? throw new ArgumentNullException("Profile");
         Configuration.Version = builder.Configuration["Version"] ?? throw new ArgumentNullException("Version");
+        Configuration.ContentPath = builder.Configuration["ContentPath"] ?? throw new ArgumentNullException("ContentPath");
     }
 
     private static void ConfigureDatabase<TContext>(IServiceCollection services, IConfiguration configuration)

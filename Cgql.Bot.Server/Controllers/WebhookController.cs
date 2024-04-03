@@ -20,7 +20,7 @@ public class WebhookController : BaseController<WebhookController>
 
     [HttpPost]
     public ApiResponse Webhook(
-        [FromQuery(Name = "installer_id")] string installerId,
+        [FromQuery(Name = "installer_id")] int installerId,
         [FromBody] WebhookRequest request)
     {
         _logger.LogInformation("Webhook received from installer {installerId}: {request}",
