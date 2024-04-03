@@ -1,9 +1,11 @@
-﻿using Arch.EntityFrameworkCore.UnitOfWork;
+﻿using System.ComponentModel.DataAnnotations;
+using Arch.EntityFrameworkCore.UnitOfWork;
 
 namespace Cgql.Bot.Model.Database;
 
 public class Author
 {
+    [Key]
     public long Id { get; set; }
     public string Login { get; set; }
     public string Username { get; set; }

@@ -15,7 +15,8 @@ public class PrimaryModule : BaseModule
             .AddCustomRepository<Repo, RepoRepository>()
             .AddCustomRepository<ScanTask, ScanTaskRepository>();
 
-        services.AddScoped<IWebhookService, WebhookService>();
+        services.AddScoped<IWebhookService, WebhookService>()
+            .AddScoped<IRepositoryService, RepositoryService>();
 
         return services;
     }

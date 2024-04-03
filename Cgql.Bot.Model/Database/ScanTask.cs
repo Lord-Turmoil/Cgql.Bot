@@ -1,11 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Arch.EntityFrameworkCore.UnitOfWork;
 
 namespace Cgql.Bot.Model.Database;
 
 public class ScanTask
 {
+    [Key]
     public long Id { get; set; }
+
     public int InstallerId { get; set; }
 
     [Column(TypeName = "char(15)")]
@@ -36,11 +39,13 @@ public class ScanTask
     public DateTime? FinishedAt { get; set; }
 
     public bool Status { get; set; }
-    public string Message { get; set; } = string.Empty;
+    public string? Message { get; set; }
 
     public bool Started => StartedAt != null;
     public bool Finished => FinishedAt != null;
-    public double Duration => (StartedAt != null && FinishedAt != null) ? (FinishedAt.Value - StartedAt.Value).TotalSeconds : 0;
+
+    public double Duration =>
+        StartedAt != null && FinishedAt != null ? (FinishedAt.Value - StartedAt.Value).TotalSeconds : 0;
 }
 
 public class ScanTaskRepository : Repository<ScanTask>

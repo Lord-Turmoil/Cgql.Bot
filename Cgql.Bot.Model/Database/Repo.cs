@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Arch.EntityFrameworkCore.UnitOfWork;
 
 namespace Cgql.Bot.Model.Database;
 
 public class Repo
 {
+    [Key]
     public long Id { get; set; }
 
     public long OwnerId { get; set; }

@@ -5,5 +5,5 @@ namespace Cgql.Bot.Server.Services;
 
 public interface IRepositoryService
 {
-    public Task<ScanTask> RequestNewTaskAsync(WebhookRequest request);
+    public Task<ScanTask> RequestNewTaskAsync(WebhookRequest request, int installerId);
 }

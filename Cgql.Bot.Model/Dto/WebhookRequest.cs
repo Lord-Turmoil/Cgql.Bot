@@ -17,25 +17,25 @@ public class WebhookRequest
     public string CompareUrl { get; set; }
 
     [JsonProperty("commits")]
-    public List<Commit> Commits { get; set; }
+    public List<CommitDto> Commits { get; set; }
 
     [JsonProperty("total_commits")]
     public int TotalCommits { get; set; }
 
     [JsonProperty("head_commit")]
-    public HeadCommit HeadCommit { get; set; }
+    public CommitDto HeadCommit { get; set; }
 
     [JsonProperty("repository")]
-    public Repository Repository { get; set; }
+    public RepositoryDto Repository { get; set; }
 
     [JsonProperty("pusher")]
-    public Pusher Pusher { get; set; }
+    public AuthorDto Pusher { get; set; }
 
     [JsonProperty("sender")]
-    public Sender Sender { get; set; }
+    public AuthorDto Sender { get; set; }
 }
 
-public class Author
+public class CommitAuthorDto
 {
     [JsonProperty("name")]
     public string Name { get; set; }
@@ -47,7 +47,7 @@ public class Author
     public string Username { get; set; }
 }
 
-public class Commit
+public class CommitDto
 {
     [JsonProperty("id")]
     public string Id { get; set; }
@@ -59,10 +59,10 @@ public class Commit
     public string Url { get; set; }
 
     [JsonProperty("author")]
-    public Author Author { get; set; }
+    public CommitAuthorDto Author { get; set; }
 
     [JsonProperty("committer")]
-    public Committer Committer { get; set; }
+    public CommitterDto Committer { get; set; }
 
     [JsonProperty("verification")]
     public Verification Verification { get; set; }
@@ -80,7 +80,7 @@ public class Commit
     public object? Modified { get; set; }
 }
 
-public class Committer
+public class CommitterDto
 {
     [JsonProperty("name")]
     public string Name { get; set; }
@@ -92,40 +92,7 @@ public class Committer
     public string Username { get; set; }
 }
 
-public class HeadCommit
-{
-    [JsonProperty("id")]
-    public string Id { get; set; }
-
-    [JsonProperty("message")]
-    public string Message { get; set; }
-
-    [JsonProperty("url")]
-    public string Url { get; set; }
-
-    [JsonProperty("author")]
-    public Author Author { get; set; }
-
-    [JsonProperty("committer")]
-    public Committer Committer { get; set; }
-
-    [JsonProperty("verification")]
-    public Verification Verification { get; set; }
-
-    [JsonProperty("timestamp")]
-    public DateTime Timestamp { get; set; }
-
-    [JsonProperty("added")]
-    public object? Added { get; set; }
-
-    [JsonProperty("removed")]
-    public object? Removed { get; set; }
-
-    [JsonProperty("modified")]
-    public object? Modified { get; set; }
-}
-
-public class InternalTracker
+public class InternalTrackerDto
 {
     [JsonProperty("enable_time_tracker")]
     public bool EnableTimeTracker { get; set; }
@@ -137,10 +104,10 @@ public class InternalTracker
     public bool EnableIssueDependencies { get; set; }
 }
 
-public class Owner
+public class AuthorDto
 {
     [JsonProperty("id")]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [JsonProperty("login")]
     public string Login { get; set; }
@@ -203,7 +170,7 @@ public class Owner
     public string Username { get; set; }
 }
 
-public class Permissions
+public class PermissionsDto
 {
     [JsonProperty("admin")]
     public bool Admin { get; set; }
@@ -215,79 +182,13 @@ public class Permissions
     public bool Pull { get; set; }
 }
 
-public class Pusher
+public class RepositoryDto
 {
     [JsonProperty("id")]
-    public int Id { get; set; }
-
-    [JsonProperty("login")]
-    public string Login { get; set; }
-
-    [JsonProperty("login_name")]
-    public string LoginName { get; set; }
-
-    [JsonProperty("full_name")]
-    public string FullName { get; set; }
-
-    [JsonProperty("email")]
-    public string Email { get; set; }
-
-    [JsonProperty("avatar_url")]
-    public string AvatarUrl { get; set; }
-
-    [JsonProperty("language")]
-    public string Language { get; set; }
-
-    [JsonProperty("is_admin")]
-    public bool IsAdmin { get; set; }
-
-    [JsonProperty("last_login")]
-    public DateTime LastLogin { get; set; }
-
-    [JsonProperty("created")]
-    public DateTime Created { get; set; }
-
-    [JsonProperty("restricted")]
-    public bool Restricted { get; set; }
-
-    [JsonProperty("active")]
-    public bool Active { get; set; }
-
-    [JsonProperty("prohibit_login")]
-    public bool ProhibitLogin { get; set; }
-
-    [JsonProperty("location")]
-    public string Location { get; set; }
-
-    [JsonProperty("website")]
-    public string Website { get; set; }
-
-    [JsonProperty("description")]
-    public string Description { get; set; }
-
-    [JsonProperty("visibility")]
-    public string Visibility { get; set; }
-
-    [JsonProperty("followers_count")]
-    public int FollowersCount { get; set; }
-
-    [JsonProperty("following_count")]
-    public int FollowingCount { get; set; }
-
-    [JsonProperty("starred_repos_count")]
-    public int StarredReposCount { get; set; }
-
-    [JsonProperty("username")]
-    public string Username { get; set; }
-}
-
-public class Repository
-{
-    [JsonProperty("id")]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [JsonProperty("owner")]
-    public Owner Owner { get; set; }
+    public AuthorDto Owner { get; set; }
 
     [JsonProperty("name")]
     public string Name { get; set; }
@@ -380,13 +281,13 @@ public class Repository
     public DateTime ArchivedAt { get; set; }
 
     [JsonProperty("permissions")]
-    public Permissions Permissions { get; set; }
+    public PermissionsDto Permissions { get; set; }
 
     [JsonProperty("has_issues")]
     public bool HasIssues { get; set; }
 
     [JsonProperty("internal_tracker")]
-    public InternalTracker InternalTracker { get; set; }
+    public InternalTrackerDto InternalTracker { get; set; }
 
     [JsonProperty("has_wiki")]
     public bool HasWiki { get; set; }
@@ -447,72 +348,6 @@ public class Repository
 
     [JsonProperty("repo_transfer")]
     public object? RepoTransfer { get; set; }
-}
-
-public class Sender
-{
-    [JsonProperty("id")]
-    public int Id { get; set; }
-
-    [JsonProperty("login")]
-    public string Login { get; set; }
-
-    [JsonProperty("login_name")]
-    public string LoginName { get; set; }
-
-    [JsonProperty("full_name")]
-    public string FullName { get; set; }
-
-    [JsonProperty("email")]
-    public string Email { get; set; }
-
-    [JsonProperty("avatar_url")]
-    public string AvatarUrl { get; set; }
-
-    [JsonProperty("language")]
-    public string Language { get; set; }
-
-    [JsonProperty("is_admin")]
-    public bool IsAdmin { get; set; }
-
-    [JsonProperty("last_login")]
-    public DateTime LastLogin { get; set; }
-
-    [JsonProperty("created")]
-    public DateTime Created { get; set; }
-
-    [JsonProperty("restricted")]
-    public bool Restricted { get; set; }
-
-    [JsonProperty("active")]
-    public bool Active { get; set; }
-
-    [JsonProperty("prohibit_login")]
-    public bool ProhibitLogin { get; set; }
-
-    [JsonProperty("location")]
-    public string Location { get; set; }
-
-    [JsonProperty("website")]
-    public string Website { get; set; }
-
-    [JsonProperty("description")]
-    public string Description { get; set; }
-
-    [JsonProperty("visibility")]
-    public string Visibility { get; set; }
-
-    [JsonProperty("followers_count")]
-    public int FollowersCount { get; set; }
-
-    [JsonProperty("following_count")]
-    public int FollowingCount { get; set; }
-
-    [JsonProperty("starred_repos_count")]
-    public int StarredReposCount { get; set; }
-
-    [JsonProperty("username")]
-    public string Username { get; set; }
 }
 
 public class Verification
