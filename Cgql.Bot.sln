@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cgql.Bot.Server", "Cgql.Bot.Server\Cgql.Bot.Server.csproj", "{779F8C85-E863-4008-B848-204F85280508}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "cgql.bot.client", "cgql.bot.client\cgql.bot.client.esproj", "{5746C042-40BD-4271-AC00-9E63DDE66907}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cgql.Bot.Helper", "Cgql.Bot.Helper\Cgql.Bot.Helper.csproj", "{33FCD3C8-C45F-445C-8000-D2C17569CD1C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cgql.Bot.Model", "Cgql.Bot.Model\Cgql.Bot.Model.csproj", "{107CB2AF-5F90-4AE3-813A-C631A7C97D5F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cgql.Bot.Extension", "Cgql.Bot.Extension\Cgql.Bot.Extension.csproj", "{9C7EFE91-8704-40A2-9F4A-6FB5A4192A16}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EE4446A7-BB25-44CB-BAC8-EB5DB224820E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Design.drawio = Design.drawio
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{779F8C85-E863-4008-B848-204F85280508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{779F8C85-E863-4008-B848-204F85280508}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{779F8C85-E863-4008-B848-204F85280508}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{779F8C85-E863-4008-B848-204F85280508}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5746C042-40BD-4271-AC00-9E63DDE66907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5746C042-40BD-4271-AC00-9E63DDE66907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5746C042-40BD-4271-AC00-9E63DDE66907}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{5746C042-40BD-4271-AC00-9E63DDE66907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5746C042-40BD-4271-AC00-9E63DDE66907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5746C042-40BD-4271-AC00-9E63DDE66907}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{33FCD3C8-C45F-445C-8000-D2C17569CD1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33FCD3C8-C45F-445C-8000-D2C17569CD1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33FCD3C8-C45F-445C-8000-D2C17569CD1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33FCD3C8-C45F-445C-8000-D2C17569CD1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{107CB2AF-5F90-4AE3-813A-C631A7C97D5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{107CB2AF-5F90-4AE3-813A-C631A7C97D5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{107CB2AF-5F90-4AE3-813A-C631A7C97D5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{107CB2AF-5F90-4AE3-813A-C631A7C97D5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C7EFE91-8704-40A2-9F4A-6FB5A4192A16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C7EFE91-8704-40A2-9F4A-6FB5A4192A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C7EFE91-8704-40A2-9F4A-6FB5A4192A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C7EFE91-8704-40A2-9F4A-6FB5A4192A16}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {203E4992-1AC7-49F6-8482-F4A9F89A416B}
+	EndGlobalSection
+EndGlobal
