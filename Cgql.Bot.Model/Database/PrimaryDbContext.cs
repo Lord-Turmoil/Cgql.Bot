@@ -12,5 +12,5 @@ public class PrimaryDbContext : DbContext
     public DbSet<Commit> Commits { get; set; } = null!;
     public DbSet<Repo> Repos { get; set; } = null!;
     public DbSet<ScanTask> ScanTasks { get; set; } = null!;
-    public DbSet<Result> Results { get; set; } = null!;
+    public DbSet<ScanResult> Results { get; set; } = null!;
 }

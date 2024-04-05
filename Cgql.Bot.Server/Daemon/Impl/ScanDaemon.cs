@@ -114,7 +114,7 @@ public class ScanDaemon : IScanDaemon
             // TODO: Perform scan
 
             var unitOfWork = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<IUnitOfWork>();
-            ScanResult result = new ScanAgent(_logger, unitOfWork).Scan(task);
+            ResultDto result = new ScanAgent(_logger, unitOfWork).Scan(task);
 
             // TODO: Send message
             _logger.LogInformation("Task {taskId} handled", task.Id);

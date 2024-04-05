@@ -5,5 +5,5 @@ namespace Cgql.Bot.Server.Daemon;
 
 public interface IApiDaemon : IHostedService, IDisposable
 {
-    void SendResult(ScanResult result);
+    void SendResult(ResultDto result);
 }

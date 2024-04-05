@@ -33,7 +33,7 @@ public class ApiDaemon : IApiDaemon
         // Do nothing...
     }
 
-    public void SendResult(ScanResult result)
+    public void SendResult(ResultDto result)
     {
         ScanTask task = result.Value;
         if (task.Commit == null)
@@ -49,7 +49,7 @@ public class ApiDaemon : IApiDaemon
 
         switch (result.Status)
         {
-            case ScanResult.ScanStatus.Success:
+            case ResultDto.ScanStatus.Success:
                 SendSuccessResult(result);
                 break;
             default:
@@ -58,7 +58,7 @@ public class ApiDaemon : IApiDaemon
         }
     }
 
-    private void SendSuccessResult(ScanResult result)
+    private void SendSuccessResult(ResultDto result)
     {
         ScanTask task = result.Value;
 
@@ -76,7 +76,7 @@ public class ApiDaemon : IApiDaemon
         });
     }
 
-    private void SendFailedResult(ScanResult result)
+    private void SendFailedResult(ResultDto result)
     {
         ScanTask task = result.Value;
 

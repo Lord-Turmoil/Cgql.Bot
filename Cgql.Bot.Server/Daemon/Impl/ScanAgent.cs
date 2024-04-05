@@ -1,7 +1,9 @@
-﻿using Arch.EntityFrameworkCore.UnitOfWork;
+﻿using System.Text.RegularExpressions;
+using Arch.EntityFrameworkCore.UnitOfWork;
 using Cgql.Bot.Helper;
 using Cgql.Bot.Model.Database;
 using Cgql.Bot.Model.Dto;
+using Newtonsoft.Json;
 
 namespace Cgql.Bot.Server.Daemon.Impl;
 
@@ -20,7 +22,7 @@ public class ScanAgent
         _unitOfWork = unitOfWork;
     }
 
-    public ScanResult Scan(ScanTask task)
+    public ResultDto Scan(ScanTask task)
     {
         try
         {
@@ -48,9 +50,10 @@ public class ScanAgent
         }
         catch (Exception e)
         {
-            return new ScanResult {
+            task.Message = e.Message;
+            return new ResultDto {
                 Value = task,
-                Status = ScanResult.ScanStatus.ExceptionThrown,
+                Status = ResultDto.ScanStatus.ExceptionThrown,
                 BugCount = 0,
                 QueryCount = 0,
                 Message = e.Message
@@ -82,9 +85,9 @@ public class ScanAgent
         }
     }
 
-    private ScanResult ScanImpl(ScanTask task)
+    private ResultDto ScanImpl(ScanTask task)
     {
-        ScanResult? result;
+        ResultDto? result;
         task.StartedAt = DateTime.Now;
 
         // Clone project.
@@ -114,27 +117,35 @@ public class ScanAgent
         }
 
         // Generate report.
-        File.Copy(_resultPath, Path.Join("wwwroot", $"{task.Id}.txt"));
-
+        ScanResultDto dto = GenerateResult();
+        var scanResult = new ScanResult {
+            Id = task.Id,
+            Status = true,
+            BugCount = dto.BugCount,
+            QueryCount = dto.QueryCount,
+            Data = JsonConvert.SerializeObject(dto)
+        };
+        _unitOfWork.GetRepository<ScanResult>().Insert(scanResult);
         task.Status = true;
 
-        return new ScanResult {
+        return new ResultDto {
             Value = task,
-            Status = ScanResult.ScanStatus.Success,
+            Result = scanResult,
+            Status = ResultDto.ScanStatus.Success,
             BugCount = 0,
             QueryCount = 0,
             Message = "Scan completed."
         };
     }
 
-    private ScanResult? CloneProject(ScanTask task)
+    private ResultDto? CloneProject(ScanTask task)
     {
         int retVal = ProcessHelper.Exec("git", "clone", task.Repository!.CloneUrl, _projectPath);
         if (retVal != 0)
         {
-            return new ScanResult {
+            return new ResultDto {
                 Value = task,
-                Status = ScanResult.ScanStatus.GitError,
+                Status = ResultDto.ScanStatus.GitError,
                 BugCount = 0,
                 QueryCount = 0,
                 Message = "Failed to clone repository."
@@ -144,15 +155,15 @@ public class ScanAgent
         return null;
     }
 
-    private ScanResult? CheckoutBranch(ScanTask task)
+    private ResultDto? CheckoutBranch(ScanTask task)
     {
         string branch = Path.GetFileName(task.Ref);
         int retVal = ProcessHelper.ExecAt(_projectPath, "git", "checkout", branch);
         if (retVal != 0)
         {
-            return new ScanResult {
+            return new ResultDto {
                 Value = task,
-                Status = ScanResult.ScanStatus.GitError,
+                Status = ResultDto.ScanStatus.GitError,
                 BugCount = 0,
                 QueryCount = 0,
                 Message = "Failed to checkout branch."
@@ -162,32 +173,78 @@ public class ScanAgent
         return null;
     }
 
-    private ScanResult? LoadConfiguration(ScanTask task)
+    private ResultDto? LoadConfiguration(ScanTask task)
     {
         // TODO: For now, there's no configuration needed.
         return null;
     }
 
-    private ScanResult? RunScanCommand(ScanTask task)
+    private ResultDto? RunScanCommand(ScanTask task)
     {
         int retVal = ProcessHelper.Exec("bash", "Template/scan.sh", Configuration.CgqlHome, _projectPath, _resultPath);
         return retVal switch {
-            1 => new ScanResult {
+            1 => new ResultDto {
                 Value = task,
-                Status = ScanResult.ScanStatus.ExecutionError,
+                Status = ResultDto.ScanStatus.ExecutionError,
                 BugCount = 0,
                 QueryCount = 0,
                 Message = "Failed to build graph."
             },
-            2 => new ScanResult {
+            2 => new ResultDto {
                 Value = task,
-                Status = ScanResult.ScanStatus.ExecutionError,
+                Status = ResultDto.ScanStatus.ExecutionError,
                 BugCount = 0,
                 QueryCount = 0,
                 Message = "Failed to scan graph."
             },
             _ => null
         };
+    }
+
+    private ScanResultDto GenerateResult()
+    {
+        var result = new ScanResultDto {
+            Results = new List<SingleResultDto>(),
+            TotalTime = -1
+        };
+
+        int queryCount = 0;
+        int bugCount = 0;
+        foreach (string line in File.ReadAllLines(_resultPath))
+        {
+            if (line.StartsWith('{'))
+            {
+                var dto = JsonConvert.DeserializeObject<SingleResultDtoDecoy>(line);
+                if (dto == null)
+                {
+                    _logger.LogError("Failed to deserialize result: {result}", line);
+                }
+                else
+                {
+                    SingleResultDto real = dto.Real();
+                    result.Results.Add(real);
+                    queryCount++;
+                    bugCount += real.Result.BugCount;
+                }
+            }
+            else
+            {
+                Match match = Regex.Match(line, @"\d+");
+                if (match.Success)
+                {
+                    result.TotalTime = int.Parse(match.Value);
+                }
+                else
+                {
+                    _logger.LogError("Failed to get total execution time in: {line}", line);
+                }
+            }
+        }
+
+        result.QueryCount = queryCount;
+        result.BugCount = bugCount;
+
+        return result;
     }
 
     private static string GetTempPath(ScanTask task)

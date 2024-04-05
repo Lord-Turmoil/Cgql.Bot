@@ -3,7 +3,7 @@ using Arch.EntityFrameworkCore.UnitOfWork;
 
 namespace Cgql.Bot.Model.Database;
 
-public class Result
+public class ScanResult
 {
     /// <summary>
     ///     This id must be consistent with ScanTask.
@@ -18,7 +18,7 @@ public class Result
     public string? Data { get; set; }
 }
 
-public class ResultRepository : Repository<Result>
+public class ResultRepository : Repository<ScanResult>
 {
     public ResultRepository(PrimaryDbContext context) : base(context)
     {

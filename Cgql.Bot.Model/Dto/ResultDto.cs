@@ -2,7 +2,7 @@
 
 namespace Cgql.Bot.Model.Dto;
 
-public class ScanResult
+public class ResultDto
 {
     public enum ScanStatus
     {
@@ -17,6 +17,7 @@ public class ScanResult
     }
 
     public ScanTask Value { get; set; } = null!;
+    public ScanResult Result { get; set; } = null!;
     public ScanStatus Status { get; set; }
     public int BugCount { get; set; }
     public int QueryCount { get; set; }
