@@ -1,4 +1,6 @@
-﻿using Cgql.Bot.Model.Database;
+﻿using Arch.EntityFrameworkCore.UnitOfWork;
+using Cgql.Bot.Model.Database;
+using Cgql.Bot.Model.Dto;
 
 namespace Cgql.Bot.Server.Daemon.Impl;
 
@@ -111,12 +113,12 @@ public class ScanDaemon : IScanDaemon
             _logger.LogInformation("Task {taskId} started", task.Id);
             // TODO: Perform scan
 
-            Thread.Sleep(5000);
-            // TODO: Get result
+            var unitOfWork = _serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<IUnitOfWork>();
+            ScanResult result = new ScanAgent(_logger, unitOfWork).Scan(task);
 
             // TODO: Send message
             _logger.LogInformation("Task {taskId} handled", task.Id);
-            _api.SendResult(task);
+            _api.SendResult(result);
         }
     }
 }

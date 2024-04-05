@@ -14,6 +14,8 @@ public class ScanTask
     [Column(TypeName = "char(15)")]
     public string Key { get; set; }
 
+    public string Ref { get; set; }
+
     public long CommitId { get; set; }
 
     [ForeignKey("CommitId")]

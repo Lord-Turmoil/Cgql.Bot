@@ -30,6 +30,7 @@ public class RepositoryService : BaseService<RepositoryService>, IRepositoryServ
             Id = IdentityHelper.NextId(),
             InstallerId = installerId,
             Key = IdentityHelper.NextIdString(),
+            Ref = request.Ref,
             CommitId = InitCommit(request).Id,
             RepositoryId = InitRepo(request.Repository).Id,
             PusherId = InitAuthor(request.Pusher).Id,
