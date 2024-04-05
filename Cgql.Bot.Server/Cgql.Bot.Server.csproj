@@ -37,6 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="Template\QueryEngine.Default.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -12,7 +12,11 @@ BUILDER_PATH="${CGQL_HOME}/Python2Graph"
 ENGINE_PATH="${CGQL_HOME}/Engine"
 
 # Build graph
-bash "${BUILDER_PATH}/build.sh" default "${PROJECT_PATH}" "${BUILDER_PATH}/config.yaml" > /dev/null
+OLD=$PWD
+cd "$BUILDER_PATH"
+bash "${BUILDER_PATH}/build.sh" default "${PROJ_PATH}" "${BUILDER_PATH}/config.yaml" > /dev/null
+cd "$OLD"
+
 if [ $? -ne 0 ]; then
     echo "Failed to build graph."
     exit 1
