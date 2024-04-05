@@ -76,6 +76,8 @@ public class Program
         Configuration.Profile = builder.Configuration["Profile"] ?? throw new ArgumentNullException("Profile");
         Configuration.Version = builder.Configuration["Version"] ?? throw new ArgumentNullException("Version");
         Configuration.RootUrl = builder.Configuration["RootUrl"] ?? throw new ArgumentNullException("RootUrl");
+        Configuration.CgqlHome = builder.Configuration["CgqlHome"] ?? throw new ArgumentNullException("CgqlHome");
+        Configuration.TempPath = builder.Configuration["TempPath"] ?? throw new ArgumentNullException("TempPath");
     }
 
     private static void ConfigureDatabase<TContext>(IServiceCollection services, IConfiguration configuration)

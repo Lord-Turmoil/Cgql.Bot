@@ -10,10 +10,9 @@ public class ScanAgent
     private readonly ILogger<ScanDaemon> _logger;
     private readonly IUnitOfWork _unitOfWork;
 
-    private string _workingDirectory;
-    private string _projectPath;
-    private string _resultPath;
-    private string _scriptPath;
+    private string _workingDirectory = null!;
+    private string _projectPath = null!;
+    private string _resultPath = null!;
 
     public ScanAgent(ILogger<ScanDaemon> logger, IUnitOfWork unitOfWork)
     {
@@ -30,10 +29,15 @@ public class ScanAgent
             ScanPreamble(task);
 
             _workingDirectory = GetTempPath(task);
+            if (Directory.Exists(_workingDirectory))
+            {
+                Directory.Delete(_workingDirectory, true);
+            }
+
+            Directory.CreateDirectory(_workingDirectory);
+
             _projectPath = Path.Join(_workingDirectory, task.Repository!.Name);
             _resultPath = Path.Join(_workingDirectory, "result.txt");
-            _scriptPath = Path.Join(_workingDirectory, "scan.sh");
-            Directory.CreateDirectory(_workingDirectory);
 
             return ScanImpl(task);
         }
@@ -51,8 +55,7 @@ public class ScanAgent
         {
             if (Directory.Exists(_workingDirectory))
             {
-                _logger.LogInformation("Cleaning up working directory {WorkingDirectory}", _workingDirectory);
-                // Directory.Delete(_workingDirectory, true);
+                Directory.Delete(_workingDirectory, true);
             }
 
             task.FinishedAt = DateTime.Now;
@@ -99,14 +102,21 @@ public class ScanAgent
             return result;
         }
 
-        // Run scan.
-        //if ((result = RunScanCommand(task)) != null)
-        //{
-        //    return result;
-        //}
+        if (Configuration.Profile == "Production")
+        {
+            // Run scan.
+            if ((result = RunScanCommand(task)) != null)
+            {
+                return result;
+            }
 
-        // Generate report.
-        //File.Copy(_resultPath, Path.Join("wwwroot", $"{task.Id}.txt"));
+            // Generate report.
+            File.Copy(_resultPath, Path.Join("wwwroot", $"{task.Id}.txt"));
+        }
+        else
+        {
+            _logger.LogWarning("Running in Development mode!");
+        }
 
         task.Status = true;
 
@@ -162,8 +172,7 @@ public class ScanAgent
 
     private ScanResult? RunScanCommand(ScanTask task)
     {
-        File.WriteAllText(_resultPath, string.Format(File.ReadAllText("Template/Scan.sh"), _projectPath, _resultPath));
-        int retVal = ProcessHelper.Exec("bash", _scriptPath);
+        int retVal = ProcessHelper.Exec("bash", "Template/scan.sh", Configuration.CgqlHome, _projectPath, _resultPath);
         return retVal switch {
             1 => new ScanResult {
                 Value = task,
@@ -183,8 +192,8 @@ public class ScanAgent
         };
     }
 
-    private string GetTempPath(ScanTask task)
+    private static string GetTempPath(ScanTask task)
     {
-        return Path.Join(Path.GetTempPath(), task.Id.ToString());
+        return Path.Join(Configuration.TempPath, task.Id.ToString());
     }
 }

@@ -29,7 +29,7 @@ public class RepositoryService : BaseService<RepositoryService>, IRepositoryServ
         return _unitOfWork.GetRepository<ScanTask>().Insert(new ScanTask {
             Id = IdentityHelper.NextId(),
             InstallerId = installerId,
-            Key = IdentityHelper.NextIdString(),
+            Key = IdentityHelper.NextIdString(12),
             Ref = request.Ref,
             CommitId = InitCommit(request).Id,
             RepositoryId = InitRepo(request.Repository).Id,

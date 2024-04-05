@@ -11,7 +11,7 @@ public class ScanTask
 
     public int InstallerId { get; set; }
 
-    [Column(TypeName = "char(15)")]
+    [Column(TypeName = "char(16)")]
     public string Key { get; set; }
 
     public string Ref { get; set; }
