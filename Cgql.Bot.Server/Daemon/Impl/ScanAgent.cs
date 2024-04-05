@@ -25,6 +25,11 @@ public class ScanAgent
         try
         {
             task.StartedAt = DateTime.Now;
+            if (!Configuration.Profile.Equals("Production"))
+            {
+                _logger.LogWarning("Running in Development mode, skipping scan");
+                throw new Exception("Scan skipped in Development mode");
+            }
 
             ScanPreamble(task);
 
@@ -102,21 +107,14 @@ public class ScanAgent
             return result;
         }
 
-        if (Configuration.Profile == "Production")
+        // Run scan.
+        if ((result = RunScanCommand(task)) != null)
         {
-            // Run scan.
-            if ((result = RunScanCommand(task)) != null)
-            {
-                return result;
-            }
+            return result;
+        }
 
-            // Generate report.
-            File.Copy(_resultPath, Path.Join("wwwroot", $"{task.Id}.txt"));
-        }
-        else
-        {
-            _logger.LogWarning("Running in Development mode!");
-        }
+        // Generate report.
+        File.Copy(_resultPath, Path.Join("wwwroot", $"{task.Id}.txt"));
 
         task.Status = true;
 
