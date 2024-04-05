@@ -369,5 +369,5 @@ appsettings.*.json
 config.json
 Work/
 Publish/
-
-Config/
+Py2Graph.Default.yaml
+QueryEngine.Default.json

@@ -12,17 +12,20 @@ public class ScanDaemon : IScanDaemon
     private const int MaxSemaphore = 128;
 
     private readonly ILogger<ScanDaemon> _logger;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly IApiDaemon _api;
 
     private readonly object _mutex = new();
-    private readonly Queue<ScanTask> _queue = new();
     private readonly Semaphore _semaphore = new(0, MaxSemaphore);
-    private readonly IServiceScopeFactory _serviceScopeFactory;
+
+    private readonly Queue<ScanTask> _queue = new();
     private readonly List<Tuple<Thread, CancellationTokenSource>> _threads = [];
 
-    public ScanDaemon(ILogger<ScanDaemon> logger, IServiceScopeFactory serviceScopeFactory)
+    public ScanDaemon(ILogger<ScanDaemon> logger, IServiceScopeFactory serviceScopeFactory, IApiDaemon api)
     {
         _logger = logger;
         _serviceScopeFactory = serviceScopeFactory;
+        _api = api;
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
@@ -113,6 +116,7 @@ public class ScanDaemon : IScanDaemon
 
             // TODO: Send message
             _logger.LogInformation("Task {taskId} handled", task.Id);
+            _api.SendResult(task);
         }
     }
 }

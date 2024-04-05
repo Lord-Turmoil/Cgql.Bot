@@ -1,7 +1,9 @@
 using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
+using Cgql.Bot.Extension.Email;
 using Cgql.Bot.Model.Database;
-using Cgql.Bot.Server.Tasks;
+using Cgql.Bot.Server.Daemon;
+using Cgql.Bot.Server.Daemon.Impl;
 using Microsoft.EntityFrameworkCore;
 using Tonisoft.AspExtensions.Cors;
 using Tonisoft.AspExtensions.Module;
@@ -37,8 +39,16 @@ public class Program
         builder.AddCors(CorsOptions.CorsSection);
 
         // Add Background Task.
+        builder.Services.AddSingleton<IEmailDaemon, EmailDaemon>();
+        builder.Services.AddSingleton<IApiDaemon, ApiDaemon>();
         builder.Services.AddSingleton<IScanDaemon, ScanDaemon>();
+
+        builder.Services.AddHostedService(provider => provider.GetRequiredService<IEmailDaemon>());
+        builder.Services.AddHostedService(provider => provider.GetRequiredService<IApiDaemon>());
         builder.Services.AddHostedService(provider => provider.GetRequiredService<IScanDaemon>());
+
+        // Add mail options.
+        builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.EmailSection));
 
         WebApplication app = builder.Build();
 
@@ -65,7 +75,7 @@ public class Program
         Configuration.BotId = builder.Configuration["BotId"] ?? throw new ArgumentNullException("BotId");
         Configuration.Profile = builder.Configuration["Profile"] ?? throw new ArgumentNullException("Profile");
         Configuration.Version = builder.Configuration["Version"] ?? throw new ArgumentNullException("Version");
-        // Configuration.ContentPath = builder.Configuration["ContentPath"] ?? throw new ArgumentNullException("ContentPath");
+        Configuration.RootUrl = builder.Configuration["RootUrl"] ?? throw new ArgumentNullException("RootUrl");
     }
 
     private static void ConfigureDatabase<TContext>(IServiceCollection services, IConfiguration configuration)

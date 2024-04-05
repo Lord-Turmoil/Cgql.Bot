@@ -9,5 +9,5 @@ public static class Configuration
     public static string Version { get; set; } = string.Empty;
     public static string BotId { get; set; } = string.Empty;
     
-    public static string ContentPath { get; set; } = string.Empty;
+    public static string RootUrl { get; set; } = string.Empty;
 }
