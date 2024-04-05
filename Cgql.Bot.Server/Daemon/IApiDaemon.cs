@@ -1,5 +1,4 @@
-﻿using Cgql.Bot.Model.Database;
-using Cgql.Bot.Model.Dto;
+﻿using Cgql.Bot.Model.Dto;
 
 namespace Cgql.Bot.Server.Daemon;
 

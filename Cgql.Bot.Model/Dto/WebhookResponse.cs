@@ -1,6 +1,4 @@
-﻿using System.Configuration;
-
-namespace Cgql.Bot.Model.Dto;
+﻿namespace Cgql.Bot.Model.Dto;
 
 public class WebhookResponse
 {

@@ -1,7 +1,6 @@
 ﻿using Cgql.Bot.Extension.Email;
 using Cgql.Bot.Model.Database;
 using Cgql.Bot.Model.Dto;
-using System.Threading.Tasks;
 
 namespace Cgql.Bot.Server.Daemon.Impl;
 
@@ -41,6 +40,7 @@ public class ApiDaemon : IApiDaemon
             _logger.LogError("Task {Id} has no commit", task.Id);
             return;
         }
+
         if (task.Repository == null)
         {
             _logger.LogError("Task {Id} has no repository", task.Id);

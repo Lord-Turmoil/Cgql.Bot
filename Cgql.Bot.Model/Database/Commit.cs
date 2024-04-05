@@ -1,6 +1,5 @@
-﻿using Arch.EntityFrameworkCore.UnitOfWork;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Arch.EntityFrameworkCore.UnitOfWork;
 
 namespace Cgql.Bot.Model.Database;
 
@@ -8,6 +7,7 @@ public class Commit
 {
     [Key]
     public long Id { get; set; }
+
     public string Sha { get; set; }
     public string Message { get; set; }
 

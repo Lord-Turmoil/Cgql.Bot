@@ -3,7 +3,6 @@ using AutoMapper;
 using Cgql.Bot.Helper;
 using Cgql.Bot.Model.Database;
 using Cgql.Bot.Model.Dto;
-using Newtonsoft.Json;
 using Tonisoft.AspExtensions.Module;
 
 namespace Cgql.Bot.Server.Services.Impl;
