@@ -1,0 +1,68 @@
+.HomePage {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+.HomePage__wrapper {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.HomePage__logo_wrapper {
+    height: 30%;
+    max-height: 30%;
+    margin-top: 5%;
+}
+
+.HomePage__logo_wrapper img {
+    height: 100%;
+}
+
+.HomePage__logo_wrapper img {
+    animation: rotation 20s linear infinite;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.Homepage__content_wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.HomePage__title_wrapper {
+    margin: 20px;
+}
+
+.HomePage__description_wrapper {
+    flex: 1;
+}
+
+.Homepage__description_wrapper p img{
+    height: 2em;
+    vertical-align: middle;
+}
+
+.HomePage__footer_wrapper {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.HomePage__footer_wrapper div {
+    width: 100%;
+    text-align: center;
+}
