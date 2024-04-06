@@ -62,7 +62,7 @@ public class ApiDaemon : IApiDaemon
     {
         ScanTask task = result.Value;
 
-        string url = Configuration.RootUrl + $"/result/{task.Id}?key={task.Key}";
+        string url = Configuration.RootUrl + $"{task.Id}?key={task.Key}";
         string body = string.Format(File.ReadAllText("Template/SuccessEmail.html"),
             task.Commit!.AuthorName,
             task.Repository!.HtmlUrl,
