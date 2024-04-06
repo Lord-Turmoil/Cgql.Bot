@@ -1,5 +1,5 @@
 import InflateBox from '~/components/InflateBox';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Helmet } from 'react-helmet';
 
@@ -9,8 +9,11 @@ import c_logo from '~/assets/img/c.svg';
 import cpp_logo from '~/assets/img/cpp.svg';
 import java_logo from '~/assets/img/java.svg';
 import python_logo from '~/assets/img/python.svg';
+import Logo from '~/parts/Logo/Logo';
 
 export default function HomePage() {
+    const [online, setOnline] = useState(false);
+
     return (
         <div className='HomePage'>
             <Helmet>
@@ -19,8 +22,8 @@ export default function HomePage() {
             <InflateBox minimum="512">
                 <div className='HomePage__wrapper'>
                     {/* Favicon */}
-                    <div className='HomePage__logo_wrapper'>
-                        <img alt='favicon' src='favicon.png'></img>
+                    <div style={{ height: "30%", marginTop: "2%" }}>
+                        <Logo online={online} />
                     </div>
 
                     <div className='Homepage__content_wrapper'>
@@ -41,7 +44,7 @@ export default function HomePage() {
                                 <img alt='java' src={java_logo}></img></p>
                         </div>
                     </div>
-                    <Footer />
+                    <Footer setOnline={(o) => { setOnline(o); }} />
                 </div>
             </InflateBox>
         </div>

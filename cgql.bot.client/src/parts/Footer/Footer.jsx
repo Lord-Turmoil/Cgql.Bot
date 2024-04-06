@@ -5,13 +5,19 @@ import stall from '~/services/stall';
 
 import './Footer.css';
 
-export function Footer() {
+export function Footer({ setOnline = null }) {
     const [error, setError] = useState();
     const [serverStatus, setServerStatus] = useState();
 
     useEffect(() => {
         fetchServerStatus();
     }, []);
+
+    useEffect(() => {
+        if (setOnline !== null) {
+            setOnline(error === undefined ? false : !error);
+        }
+    }), [setOnline, error];
 
     const getProfile = () => error === undefined ?
         <span className='Footer__status Footer__status_load'><i className='dot'></i>Loading...</span> :

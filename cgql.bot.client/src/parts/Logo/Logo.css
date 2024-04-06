@@ -1,0 +1,32 @@
+.Logo {
+    height: 100%;
+    display: inline-block;
+}
+
+.Logo__image {
+    height: 100%;
+    transition: all 1s;
+}
+
+.Logo__online.Logo__fast .Logo__image {
+    animation: rotation 10s linear infinite;
+}
+
+.Logo__online.Logo__slow .Logo__image {
+    animation: rotation 20s linear infinite;
+}
+
+.Logo__offline .Logo__image {
+    filter: brightness(0.8);
+    animation: none;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
