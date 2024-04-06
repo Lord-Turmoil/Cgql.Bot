@@ -62,11 +62,12 @@ public class ApiDaemon : IApiDaemon
     {
         ScanTask task = result.Value;
 
-        string username = task.Commit!.AuthorName;
-        string repoName = task.Repository!.FullName;
         string url = Configuration.RootUrl + $"/result/{task.Id}?key={task.Key}";
-        string body = string.Format(File.ReadAllText("Template/SuccessEmail.html")
-            , username, repoName, url);
+        string body = string.Format(File.ReadAllText("Template/SuccessEmail.html"),
+            task.Commit!.AuthorName,
+            task.Repository!.HtmlUrl,
+            task.Repository!.FullName,
+            url);
 
         _emailService.SendAsync(new EmailData {
             ToEmail = task.Commit.AuthorEmail,
@@ -80,10 +81,12 @@ public class ApiDaemon : IApiDaemon
     {
         ScanTask task = result.Value;
 
-        string username = task.Commit!.AuthorName;
-        string repoName = task.Repository!.FullName;
-        string body = string.Format(File.ReadAllText("Template/FailedEmail.html")
-            , username, repoName, result.Status, result.Message);
+        string body = string.Format(File.ReadAllText("Template/FailedEmail.html"),
+            task.Commit!.AuthorName,
+            task.Repository!.HtmlUrl,
+            task.Repository!.FullName,
+            result.Status,
+            result.Message);
 
         _emailService.SendAsync(new EmailData {
             ToEmail = task.Commit.AuthorEmail,
