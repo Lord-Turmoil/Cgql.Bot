@@ -10,7 +10,7 @@ public class Author
 
     public string Login { get; set; }
     public string Username { get; set; }
-    public string AvatarUrl { get; set; }
+    public string? AvatarUrl { get; set; }
 }
 
 public class AuthorRepository : Repository<Author>
