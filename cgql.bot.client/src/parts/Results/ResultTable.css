@@ -1,0 +1,29 @@
+.ResultTable h3 {
+    display: inline;
+    margin-right: 10px;
+}
+
+.ResultTable__title hr {
+    width: 40%;
+    background: linear-gradient(to right, #dfdfdf, transparent);
+}
+
+.ResultTable__table {
+    margin: 10px auto;
+}
+
+.ResultTable__table table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #dfdfdf;
+}
+
+.ResultTable__table th {
+    border: 1px solid #dfdfdf;
+    padding: 3px 0;
+}
+
+.ResultTable__table td {
+    border: 1px solid #dfdfdf;
+    padding: 3px;
+}

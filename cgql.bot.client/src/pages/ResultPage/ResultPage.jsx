@@ -2,14 +2,18 @@ import InflateBox from '~/components/InflateBox';
 import { Helmet } from 'react-helmet';
 
 
-import './ResultPage.css';
 import LogoNav from '~/parts/LogoNav/LogoNav';
 import LanguageNav from '~/parts/LanguageNav/LanguageNav';
 import { Footer } from '~/parts/Footer/Footer';
 import { useState } from 'react';
+import { Results } from '~/parts/Results/Results';
+
+import './ResultPage.css';
+import { LoadCircle } from '~/components/LoadCircle/LoadCircle';
 
 export function ResultPage() {
     const [online, setOnline] = useState(false);
+    const [result, setResult] = useState({});
 
     return (
         <div className='ResultPage'>
@@ -19,10 +23,17 @@ export function ResultPage() {
             <InflateBox overflow={true}>
                 <LogoNav online={online} />
                 <hr />
-                <LanguageNav language='python' id='1' />
-                <div className='ResultPage__content'>
-                    {renderOverview(10, 3, 1234)}
-                </div>
+                {result === undefined
+                    ? <LoadCircle sx={{ height: "100px", marginTop: "10%" }} />
+                    : result === null ? <h1>404 Not Found</h1>
+                        : <div>
+                            <LanguageNav language='python' id='1' />
+                            <div className='ResultPage__content'>
+                                {renderOverview(10, 3, 1234)}
+                            </div>
+                            <Results results={result}></Results>
+                        </div>
+                }
                 <Footer setOnline={setOnline} />
             </InflateBox>
         </div>
