@@ -5,67 +5,55 @@ namespace Cgql.Bot.Model.Dto;
 public class WebhookRequest
 {
     [JsonProperty("ref")]
-    public string Ref { get; set; }
+    public string Ref { get; set; } = null!;
 
     [JsonProperty("before")]
-    public string Before { get; set; }
+    public string? Before { get; set; }
 
     [JsonProperty("after")]
-    public string After { get; set; }
+    public string? After { get; set; }
 
     [JsonProperty("compare_url")]
-    public string CompareUrl { get; set; }
+    public string? CompareUrl { get; set; }
 
     [JsonProperty("commits")]
-    public List<CommitDto> Commits { get; set; }
+    public List<CommitDto> Commits { get; set; } = null!;
 
     [JsonProperty("total_commits")]
     public int TotalCommits { get; set; }
 
     [JsonProperty("head_commit")]
-    public CommitDto HeadCommit { get; set; }
+    public CommitDto HeadCommit { get; set; } = null!;
 
     [JsonProperty("repository")]
-    public RepositoryDto Repository { get; set; }
+    public RepositoryDto Repository { get; set; } = null!;
 
     [JsonProperty("pusher")]
-    public AuthorDto Pusher { get; set; }
+    public AuthorDto Pusher { get; set; } = null!;
 
     [JsonProperty("sender")]
-    public AuthorDto Sender { get; set; }
-}
-
-public class CommitAuthorDto
-{
-    [JsonProperty("name")]
-    public string Name { get; set; }
-
-    [JsonProperty("email")]
-    public string Email { get; set; }
-
-    [JsonProperty("username")]
-    public string Username { get; set; }
+    public AuthorDto Sender { get; set; } = null!;
 }
 
 public class CommitDto
 {
     [JsonProperty("id")]
-    public string Id { get; set; }
+    public string Id { get; set; } = null!;
 
     [JsonProperty("message")]
-    public string Message { get; set; }
+    public string Message { get; set; } = null!;
 
     [JsonProperty("url")]
-    public string Url { get; set; }
+    public string Url { get; set; } = null!;
 
     [JsonProperty("author")]
-    public CommitAuthorDto Author { get; set; }
+    public CommitterDto Author { get; set; } = null!;
 
     [JsonProperty("committer")]
-    public CommitterDto Committer { get; set; }
+    public CommitterDto Committer { get; set; } = null!;
 
     [JsonProperty("verification")]
-    public Verification Verification { get; set; }
+    public Verification? Verification { get; set; }
 
     [JsonProperty("timestamp")]
     public DateTime Timestamp { get; set; }
@@ -83,13 +71,13 @@ public class CommitDto
 public class CommitterDto
 {
     [JsonProperty("name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
     [JsonProperty("email")]
-    public string Email { get; set; }
+    public string Email { get; set; } = null!;
 
     [JsonProperty("username")]
-    public string Username { get; set; }
+    public string Username { get; set; } = null!;
 }
 
 public class InternalTrackerDto
@@ -110,22 +98,22 @@ public class AuthorDto
     public long Id { get; set; }
 
     [JsonProperty("login")]
-    public string Login { get; set; }
+    public string Login { get; set; } = null!;
 
     [JsonProperty("login_name")]
-    public string LoginName { get; set; }
+    public string LoginName { get; set; } = null!;
 
     [JsonProperty("full_name")]
-    public string FullName { get; set; }
+    public string FullName { get; set; } = null!;
 
     [JsonProperty("email")]
-    public string Email { get; set; }
+    public string Email { get; set; } = null!;
 
     [JsonProperty("avatar_url")]
-    public string AvatarUrl { get; set; }
+    public string? AvatarUrl { get; set; }
 
     [JsonProperty("language")]
-    public string Language { get; set; }
+    public string Language { get; set; } = null!;
 
     [JsonProperty("is_admin")]
     public bool IsAdmin { get; set; }
@@ -146,16 +134,16 @@ public class AuthorDto
     public bool ProhibitLogin { get; set; }
 
     [JsonProperty("location")]
-    public string Location { get; set; }
+    public string? Location { get; set; }
 
     [JsonProperty("website")]
-    public string Website { get; set; }
+    public string? Website { get; set; }
 
     [JsonProperty("description")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     [JsonProperty("visibility")]
-    public string Visibility { get; set; }
+    public string? Visibility { get; set; }
 
     [JsonProperty("followers_count")]
     public int FollowersCount { get; set; }
@@ -167,7 +155,7 @@ public class AuthorDto
     public int StarredReposCount { get; set; }
 
     [JsonProperty("username")]
-    public string Username { get; set; }
+    public string Username { get; set; } = null!;
 }
 
 public class PermissionsDto
@@ -188,16 +176,16 @@ public class RepositoryDto
     public long Id { get; set; }
 
     [JsonProperty("owner")]
-    public AuthorDto Owner { get; set; }
+    public AuthorDto Owner { get; set; } = null!;
 
     [JsonProperty("name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
     [JsonProperty("full_name")]
-    public string FullName { get; set; }
+    public string FullName { get; set; } = null!;
 
     [JsonProperty("description")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     [JsonProperty("empty")]
     public bool Empty { get; set; }
@@ -221,31 +209,31 @@ public class RepositoryDto
     public int Size { get; set; }
 
     [JsonProperty("language")]
-    public string Language { get; set; }
+    public string? Language { get; set; }
 
     [JsonProperty("languages_url")]
-    public string LanguagesUrl { get; set; }
+    public string? LanguagesUrl { get; set; }
 
     [JsonProperty("html_url")]
-    public string HtmlUrl { get; set; }
+    public string? HtmlUrl { get; set; }
 
     [JsonProperty("url")]
-    public string Url { get; set; }
+    public string? Url { get; set; }
 
     [JsonProperty("link")]
-    public string Link { get; set; }
+    public string? Link { get; set; }
 
     [JsonProperty("ssh_url")]
-    public string SshUrl { get; set; }
+    public string SshUrl { get; set; } = null!;
 
     [JsonProperty("clone_url")]
-    public string CloneUrl { get; set; }
+    public string CloneUrl { get; set; } = null!;
 
     [JsonProperty("original_url")]
-    public string OriginalUrl { get; set; }
+    public string? OriginalUrl { get; set; }
 
     [JsonProperty("website")]
-    public string Website { get; set; }
+    public string? Website { get; set; }
 
     [JsonProperty("stars_count")]
     public int StarsCount { get; set; }
@@ -266,7 +254,7 @@ public class RepositoryDto
     public int ReleaseCounter { get; set; }
 
     [JsonProperty("default_branch")]
-    public string DefaultBranch { get; set; }
+    public string DefaultBranch { get; set; } = null!;
 
     [JsonProperty("archived")]
     public bool Archived { get; set; }
@@ -281,13 +269,13 @@ public class RepositoryDto
     public DateTime ArchivedAt { get; set; }
 
     [JsonProperty("permissions")]
-    public PermissionsDto Permissions { get; set; }
+    public PermissionsDto? Permissions { get; set; }
 
     [JsonProperty("has_issues")]
     public bool HasIssues { get; set; }
 
     [JsonProperty("internal_tracker")]
-    public InternalTrackerDto InternalTracker { get; set; }
+    public InternalTrackerDto? InternalTracker { get; set; }
 
     [JsonProperty("has_wiki")]
     public bool HasWiki { get; set; }
@@ -329,19 +317,19 @@ public class RepositoryDto
     public bool DefaultDeleteBranchAfterMerge { get; set; }
 
     [JsonProperty("default_merge_style")]
-    public string DefaultMergeStyle { get; set; }
+    public string? DefaultMergeStyle { get; set; }
 
     [JsonProperty("default_allow_maintainer_edit")]
     public bool DefaultAllowMaintainerEdit { get; set; }
 
     [JsonProperty("avatar_url")]
-    public string AvatarUrl { get; set; }
+    public string? AvatarUrl { get; set; }
 
     [JsonProperty("internal")]
     public bool Internal { get; set; }
 
     [JsonProperty("mirror_interval")]
-    public string MirrorInterval { get; set; }
+    public string? MirrorInterval { get; set; }
 
     [JsonProperty("mirror_updated")]
     public DateTime MirrorUpdated { get; set; }
@@ -356,14 +344,14 @@ public class Verification
     public bool Verified { get; set; }
 
     [JsonProperty("reason")]
-    public string Reason { get; set; }
+    public string? Reason { get; set; }
 
     [JsonProperty("signature")]
-    public string Signature { get; set; }
+    public string? Signature { get; set; }
 
     [JsonProperty("signer")]
     public object? Signer { get; set; }
 
     [JsonProperty("payload")]
-    public string Payload { get; set; }
+    public string? Payload { get; set; }
 }
