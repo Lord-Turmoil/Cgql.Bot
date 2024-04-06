@@ -4,7 +4,7 @@ class Api {
     constructor() {
         this._api = axios.create({
             withCredentials: false,
-            baseURL: 'http://localhost/api/'
+            baseURL: 'http://81.70.161.76/'
         });
     }
 

@@ -371,3 +371,6 @@ Work/
 Publish/
 Py2Graph.Default.yaml
 QueryEngine.Default.json
+
+*.bkp
+*.dtmp

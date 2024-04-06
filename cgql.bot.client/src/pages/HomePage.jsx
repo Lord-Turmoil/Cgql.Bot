@@ -1,11 +1,29 @@
 import InflateBox from '~/components/InflateBox';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Helmet } from 'react-helmet';
 
 import './HomePage.css';
+import api from '~/services/api';
+import stall from '~/services/stall';
 
 export default function HomePage() {
+    const [error, setError] = useState();
+    const [profile, setProfile] = useState();
+
+    useEffect(() => {
+        fetchServerProfile();
+    }, []);
+
+    const getProfile = () => error === undefined ?
+        <span className='HomePage__status HomePage__status_load'><i className='dot'></i>Loading...</span> :
+        error ? <span className='HomePage__status HomePage__status_error'><i className='dot'></i>Offline</span> :
+            <span className='HomePage__status HomePage__status_ok'><i className='dot'></i>Online</span>
+
+    useEffect(() => {
+        setProfile(getProfile());
+    }, [error]);
+
     return (
         <div className='HomePage'>
             <Helmet>
@@ -38,6 +56,7 @@ export default function HomePage() {
                     </div>
                     {/* Footer */}
                     <div className='HomePage__footer_wrapper'>
+                        <p>Server status: {profile}</p>
                         <hr />
                         <div>
                             <p>Homepage: <a href="https://www.gitlink.org.cn/softbot/10033" target='_blank'>GitLink</a></p>
@@ -48,4 +67,9 @@ export default function HomePage() {
             </InflateBox>
         </div>
     );
+
+    async function fetchServerProfile() {
+        const dto = await stall(api.get('/api/Status/Ping'));
+        setError(dto.meta.status != 0);
+    }
 }
