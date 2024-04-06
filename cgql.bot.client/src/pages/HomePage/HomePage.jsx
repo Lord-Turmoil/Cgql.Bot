@@ -1,29 +1,12 @@
 import InflateBox from '~/components/InflateBox';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { Helmet } from 'react-helmet';
 
 import './HomePage.css';
-import api from '~/services/api';
-import stall from '~/services/stall';
+import { Footer } from '~/parts/Footer/Footer';
 
 export default function HomePage() {
-    const [error, setError] = useState();
-    const [profile, setProfile] = useState();
-
-    useEffect(() => {
-        fetchServerProfile();
-    }, []);
-
-    const getProfile = () => error === undefined ?
-        <span className='HomePage__status HomePage__status_load'><i className='dot'></i>Loading...</span> :
-        error ? <span className='HomePage__status HomePage__status_error'><i className='dot'></i>Offline</span> :
-            <span className='HomePage__status HomePage__status_ok'><i className='dot'></i>Online</span>
-
-    useEffect(() => {
-        setProfile(getProfile());
-    }, [error]);
-
     return (
         <div className='HomePage'>
             <Helmet>
@@ -54,22 +37,11 @@ export default function HomePage() {
                                 <img alt='java' src='https://profilinator.rishav.dev/skills-assets/java-original-wordmark.svg'></img></p>
                         </div>
                     </div>
-                    {/* Footer */}
-                    <div className='HomePage__footer_wrapper'>
-                        <p>Server status: {profile}</p>
-                        <hr />
-                        <div>
-                            <p>Homepage: <a href="https://www.gitlink.org.cn/softbot/10033" target='_blank'>GitLink</a></p>
-                            <p>Powered by React + ASP.NET Core</p>
-                        </div>
-                    </div>
+                    <Footer />
                 </div>
             </InflateBox>
         </div>
     );
 
-    async function fetchServerProfile() {
-        const dto = await stall(api.get('/api/Status/Ping'));
-        setError(dto.meta.status != 0);
-    }
+    
 }

@@ -4,7 +4,7 @@ class Api {
     constructor() {
         this._api = axios.create({
             withCredentials: false,
-            baseURL: 'http://81.70.161.76/'
+            baseURL: 'http://81.70.161.76:5000/'
         });
     }
 

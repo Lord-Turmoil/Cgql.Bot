@@ -1,0 +1,35 @@
+.Footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.Footer div {
+    width: 100%;
+    text-align: center;
+}
+
+.Footer__status {
+    width: 50%;
+}
+
+.Footer__status .dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: auto 5px;
+}
+
+.Footer__status.Footer__status_load .dot {
+    background-color: orange;
+}
+
+.Footer__status.Footer__status_ok .dot {
+    background-color: green;
+}
+
+.Footer__status.Footer__status_error .dot {
+    background-color: red;
+}

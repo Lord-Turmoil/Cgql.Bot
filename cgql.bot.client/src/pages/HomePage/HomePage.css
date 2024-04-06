@@ -21,9 +21,6 @@
 
 .HomePage__logo_wrapper img {
     height: 100%;
-}
-
-.HomePage__logo_wrapper img {
     animation: rotation 20s linear infinite;
 }
 
@@ -53,40 +50,4 @@
 .Homepage__description_wrapper p img {
     height: 2em;
     vertical-align: middle;
-}
-
-.HomePage__footer_wrapper {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    margin: 20px 0;
-}
-
-.HomePage__footer_wrapper div {
-    width: 100%;
-    text-align: center;
-}
-
-.HomePage__status {
-    width: 50%;
-}
-
-.HomePage__status .dot {
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    margin: auto 5px;
-}
-
-.HomePage__status.HomePage__status_load .dot {
-    background-color: orange;
-}
-
-.HomePage__status.HomePage__status_ok .dot {
-    background-color: green;
-}
-
-.HomePage__status.HomePage__status_error .dot {
-    background-color: red;
 }
