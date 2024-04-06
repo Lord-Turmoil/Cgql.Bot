@@ -18,9 +18,9 @@ public class ScanResult
     public string? Data { get; set; }
 }
 
-public class ResultRepository : Repository<ScanResult>
+public class ScanResultRepository : Repository<ScanResult>
 {
-    public ResultRepository(PrimaryDbContext context) : base(context)
+    public ScanResultRepository(PrimaryDbContext context) : base(context)
     {
     }
 }

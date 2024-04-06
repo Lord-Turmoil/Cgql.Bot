@@ -13,10 +13,12 @@ public class PrimaryModule : BaseModule
         services.AddCustomRepository<Author, AuthorRepository>()
             .AddCustomRepository<Commit, CommitRepository>()
             .AddCustomRepository<Repo, RepoRepository>()
-            .AddCustomRepository<ScanTask, ScanTaskRepository>();
+            .AddCustomRepository<ScanTask, ScanTaskRepository>()
+            .AddCustomRepository<ScanResult, ScanResultRepository>();
 
         services.AddScoped<IWebhookService, WebhookService>()
-            .AddScoped<IRepositoryService, RepositoryService>();
+            .AddScoped<IRepositoryService, RepositoryService>()
+            .AddScoped<IResultService, ResultService>();
 
         return services;
     }

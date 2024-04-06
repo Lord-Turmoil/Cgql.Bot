@@ -58,6 +58,9 @@ public class BugTable
     [JsonProperty("rows")]
     public List<List<string>> Rows { get; set; }
 
+    [JsonProperty("columnCount")]
     public int ColumnCount => Headers.Count;
+
+    [JsonProperty("bugCount")]
     public int BugCount => Rows.Count;
 }
