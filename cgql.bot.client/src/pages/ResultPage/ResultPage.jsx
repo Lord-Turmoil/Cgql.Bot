@@ -1,19 +1,44 @@
 import InflateBox from '~/components/InflateBox';
 import { Helmet } from 'react-helmet';
-
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import LogoNav from '~/parts/LogoNav/LogoNav';
 import LanguageNav from '~/parts/LanguageNav/LanguageNav';
 import { Footer } from '~/parts/Footer/Footer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Results } from '~/parts/Results/Results';
 
 import './ResultPage.css';
 import { LoadCircle } from '~/components/LoadCircle/LoadCircle';
+import api from '~/services/api';
 
 export function ResultPage() {
+    const [queryParams] = useSearchParams()
+    const params = useParams();
+
     const [online, setOnline] = useState(false);
-    const [result, setResult] = useState({});
+    const [result, setResult] = useState();
+
+    const [id, setId] = useState(params.id);
+    const [key, setKey] = useState();
+
+    const [error, setError] = useState();
+
+    useEffect(() => {
+        if (queryParams.has('key')) {
+            setKey(queryParams.get('key'));
+        } else {
+            setError("Missing key in query parameters.");
+        }
+    }, [queryParams]);
+
+    useEffect(() => {
+        if (id !== undefined && key !== undefined) {
+            populateResult(id, key);
+        }
+    }, [id, key]);
+
+    console.log("🚀 > ResultPage > error:", error);
 
     return (
         <div className='ResultPage'>
@@ -27,11 +52,11 @@ export function ResultPage() {
                     ? <LoadCircle sx={{ height: "100px", marginTop: "10%" }} />
                     : result === null ? <h1>404 Not Found</h1>
                         : <div>
-                            <LanguageNav language='python' id='1' />
+                            <LanguageNav language='python' id={id} />
                             <div className='ResultPage__content'>
-                                {renderOverview(10, 3, 1234)}
+                                {renderOverview(result.queryCount, result.bugCount, result.totalTime)}
                             </div>
-                            <Results results={result}></Results>
+                            <Results results={result.results}></Results>
                         </div>
                 }
                 <Footer setOnline={setOnline} />
@@ -49,5 +74,14 @@ export function ResultPage() {
                 }
             </div>
         )
+    }
+
+    async function populateResult(id, key) {
+        const dto = await api.get('/api/Result/' + id, { key: key });
+        if (dto.meta.status === 0) {
+            setResult(dto.data);
+        } else {
+            setError(dto.meta.message);
+        }
     }
 }

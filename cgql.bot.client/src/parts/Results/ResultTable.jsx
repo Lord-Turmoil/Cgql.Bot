@@ -24,6 +24,7 @@ result: {
 }
 */
 export function ResultTable({ result }) {
+    console.log("🚀 > ResultTable > result:", result);
     return (
         <div className="ResultTable">
             <div className='ResultTable__title'>

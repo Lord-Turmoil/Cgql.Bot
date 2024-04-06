@@ -9,7 +9,8 @@
 }
 
 .ResultTable__table {
-    margin: 10px auto;
+    margin: 20px auto;
+    font-family: monospace;
 }
 
 .ResultTable__table table {

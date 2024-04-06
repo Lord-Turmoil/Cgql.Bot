@@ -29,46 +29,18 @@ import loadingImage from '~/assets/img/loading.svg'
     }
 ]
 */
-const RESULT = {
-    "name": "FlaskDebug",
-    "result": {
-        "headers": [
-            "app.run",
-            "comment"
-        ],
-        "rows": [
-            [
-                "(prod.py:46) app.run(debug=True)",
-                "Flask run with debug mode enabled"
-            ],
-            [
-                "(prod-2.py:46) app.run(debug=True)",
-                "Flask run with debug mode enabled"
-            ]
-        ],
-        "columnCount": 2,
-        "bugCount": 2
-    },
-    "milliseconds": 38
-};
 export function Results({ results }) {
+    console.log("🚀 > Results > results:", results);
     if (results === undefined) {
         return null;
     } else if (results.length === 0) {
         return null;
     } else {
         return (
-            // <div className='Results'>
-            //     {
-            //         results.map((result, index) => {
-            //             result.bugCount === 0 ? null : <ResultTable result={result} key={index} />
-            //         })
-            //     }
-            // </div>
             <div className='Results'>
                 {
-                    [RESULT, RESULT, RESULT].map((r, index) => {
-                        return <ResultTable result={r} key={index} />
+                    results.map((result, index) => {
+                        return result.result.bugCount === 0 ? null : <ResultTable result={result} key={index} />
                     })
                 }
             </div>
