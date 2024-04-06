@@ -16,22 +16,12 @@
 .HomePage__logo_wrapper {
     height: 30%;
     max-height: 30%;
-    margin-top: 5%;
+    margin-top: 3%;
 }
 
 .HomePage__logo_wrapper img {
     height: 100%;
     animation: rotation 20s linear infinite;
-}
-
-@keyframes rotation {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
 }
 
 .Homepage__content_wrapper {

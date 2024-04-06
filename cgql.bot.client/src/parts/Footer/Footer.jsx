@@ -25,10 +25,10 @@ export function Footer() {
     return (
         <div className='Footer'>
             <p>Server status: {serverStatus}</p>
-            <hr />
+            <hr className='separator' />
             <div>
                 <p>Homepage: <a href="https://www.gitlink.org.cn/softbot/10033" target='_blank'>GitLink</a></p>
-                <p>Powered by React + ASP.NET Core</p>
+                <p>Powered by <a href="https://react.dev/" target='_blank'>React</a> & <a href="https://dotnet.microsoft.com/en-us/apps/aspnet">ASP.NET Core</a></p>
             </div>
         </div>
     );

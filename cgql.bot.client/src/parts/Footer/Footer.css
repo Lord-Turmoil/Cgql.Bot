@@ -3,6 +3,7 @@
     bottom: 0;
     width: 100%;
     margin: 20px 0;
+    text-align: center;
 }
 
 .Footer div {
@@ -27,7 +28,7 @@
 }
 
 .Footer__status.Footer__status_ok .dot {
-    background-color: green;
+    background-color: greenyellow;
 }
 
 .Footer__status.Footer__status_error .dot {

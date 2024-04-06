@@ -1,0 +1,13 @@
+.ResultPage {}
+
+.ResultPage__content {
+    width: 90%;
+    margin: 0 auto;
+}
+.ResultPage__overview {
+    margin: 10px 0;
+}
+
+.ResultPage__overview p {
+    text-indent: 2em;
+}

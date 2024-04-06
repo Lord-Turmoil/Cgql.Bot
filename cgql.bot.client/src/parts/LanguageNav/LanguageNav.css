@@ -1,0 +1,20 @@
+.LanguageNav {
+    height: 30px;
+    width: 85%;
+    margin: 10px auto;
+}
+
+.LanguageNav__language {
+    display: inline-block;
+    height: 100%;
+    width: 50%;
+}
+
+.LanguageNav__language img {
+    height: 100%;
+    vertical-align: middle;
+}
+
+.LanguageNav__right {
+    float: right;
+}
