@@ -11,6 +11,7 @@ export function Footer({ setOnline = null }) {
 
     useEffect(() => {
         fetchServerStatus();
+        setInterval(fetchServerStatus, 10000);
     }, []);
 
     useEffect(() => {

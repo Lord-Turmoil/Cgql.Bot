@@ -56,7 +56,11 @@ export function ResultPage() {
         }
     }, [id, key]);
 
-    console.log("🚀 > ResultPage > error:", error);
+    useEffect(() => {
+        if (online && data === undefined && id !== undefined && key !== undefined) {
+            populateResult(id, key);
+        }
+    }, [online]);
 
     return (
         <div className='ResultPage'>
@@ -122,12 +126,13 @@ export function ResultPage() {
     function renderError(message) {
         return (
             <div className='ResultPage__error'>
-                {message[0] ?
+                {online ? message[0] ?
                     <div>
                         <h2>One or more errors occurred when we scan your repository!</h2>
                         <p>{message}</p>
                     </div>
                     : <h2>{message}</h2>
+                    : <h2>Server offline, report not available.</h2>
                 }
             </div>
         )
