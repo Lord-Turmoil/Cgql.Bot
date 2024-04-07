@@ -4,5 +4,5 @@ namespace Cgql.Bot.Server.Services;
 
 public interface IResultService
 {
-    Task<ScanResultDto> GetResult(long id, string key);
+    Task<CompleteResultDto> GetResult(long id, string key);
 }

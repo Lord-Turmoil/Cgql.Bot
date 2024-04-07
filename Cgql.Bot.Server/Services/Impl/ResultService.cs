@@ -3,6 +3,7 @@ using AutoMapper;
 using Cgql.Bot.Model.Database;
 using Cgql.Bot.Model.Dto;
 using Cgql.Bot.Server.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Tonisoft.AspExtensions.Module;
 
@@ -25,9 +26,17 @@ public class ResultService : BaseService<ResultService>, IResultService
         _resultRepo = resultRepo;
     }
 
-    public async Task<ScanResultDto> GetResult(long id, string key)
+    public async Task<CompleteResultDto> GetResult(long id, string key)
     {
-        ScanTask? task = await _taskRepo.GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(id) && x.Key.Equals(key));
+        ScanTask? task = await _taskRepo.GetFirstOrDefaultAsync(
+            predicate: x => x.Id.Equals(id) && x.Key.Equals(key),
+            include: s => s
+                .Include(t => t.Commit)
+                .Include(t => t.Repository).ThenInclude(r => r.Owner)
+                .Include(t => t.Pusher)
+                .Include(t => t.Sender)
+            );
+
         if (task == null)
         {
             throw new ResultException(ResultException.Types.NotFound, "Requested scan result doesn't exist");
@@ -50,12 +59,15 @@ public class ResultService : BaseService<ResultService>, IResultService
             throw new Exception("Request scan doesn't have a result");
         }
 
-        ScanResultDto? dto = JsonConvert.DeserializeObject<ScanResultDto>(result.Data);
+        var dto = JsonConvert.DeserializeObject<ScanResultDto>(result.Data);
         if (dto == null)
         {
             throw new Exception("Failed to get scan result");
         }
 
-        return dto;
+        return new CompleteResultDto {
+            Task = _mapper.Map<ScanTask, ScanTaskModelDto>(task),
+            Result = dto
+        };
     }
 }

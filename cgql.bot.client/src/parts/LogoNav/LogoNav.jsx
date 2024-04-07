@@ -5,8 +5,13 @@ import Logo from '../Logo/Logo';
 
 /*
 data: {
-    username: string,
-    repository: string
+    repository: string,
+    repositoryUrl: string,
+
+    branch: string,
+
+    commit: string,
+    commitUrl: string
 }
 */
 export default function LogoNav({ data = null, online = false }) {
@@ -23,9 +28,11 @@ export default function LogoNav({ data = null, online = false }) {
             </div>
             {data == null ? null :
                 <div className='NavBar__right'>
-                    <span>Username: Lord Turmoil</span>
-                    <i>|</i>
-                    <span>Repository: Turmoil/Subject</span>
+                    <span>Repository: <a href={data.repositoryUrl} target='_blank'>{data.repository}</a></span>
+                    <i></i>
+                    <span>Branch: <a href={data.branchUrl} target='_blank'>{data.branch}</a></span>
+                    <i></i>
+                    <span>Commit: <a href={data.commitUrl} target='_blank'>{data.commit}</a></span>
                 </div>
             }
         </div>

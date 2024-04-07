@@ -19,22 +19,22 @@ public class ScanTask
     public long CommitId { get; set; }
 
     [ForeignKey("CommitId")]
-    public Commit? Commit { get; set; }
+    public Commit Commit { get; set; }
 
     public long RepositoryId { get; set; }
 
     [ForeignKey("RepositoryId")]
-    public Repo? Repository { get; set; }
+    public Repo Repository { get; set; }
 
     public long PusherId { get; set; }
 
     [ForeignKey("PusherId")]
-    public Author? Pusher { get; set; }
+    public Author Pusher { get; set; }
 
     public long SenderId { get; set; }
 
     [ForeignKey("SenderId")]
-    public Author? Sender { get; set; }
+    public Author Sender { get; set; }
 
     public DateTime CreatedAt { get; set; }
     public DateTime? StartedAt { get; set; }

@@ -25,7 +25,7 @@ public class ResultController : BaseController<ResultController>
     {
         try
         {
-            ScanResultDto dto = await _service.GetResult(id, key);
+            CompleteResultDto dto = await _service.GetResult(id, key);
             return new OkResponse(new OkDto(data: dto));
         }
         catch (ResultException e)

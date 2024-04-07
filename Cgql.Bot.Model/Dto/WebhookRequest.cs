@@ -215,7 +215,7 @@ public class RepositoryDto
     public string? LanguagesUrl { get; set; }
 
     [JsonProperty("html_url")]
-    public string? HtmlUrl { get; set; }
+    public string HtmlUrl { get; set; } = null!;
 
     [JsonProperty("url")]
     public string? Url { get; set; }

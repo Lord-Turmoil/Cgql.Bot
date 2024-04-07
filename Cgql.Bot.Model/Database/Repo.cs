@@ -12,7 +12,7 @@ public class Repo
     public long OwnerId { get; set; }
 
     [ForeignKey("OwnerId")]
-    public Author? Owner { get; set; }
+    public Author Owner { get; set; }
 
     public string Name { get; set; }
     public string FullName { get; set; }

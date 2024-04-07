@@ -9,5 +9,10 @@ public class AutoMapperProfile : MapperConfigurationExpression
     public AutoMapperProfile()
     {
         CreateMap<ScanTask, WebhookResponse>();
+
+        CreateMap<Author, AuthorModelDto>();
+        CreateMap<Commit, CommitModelDto>();
+        CreateMap<Repo, RepoModelDto>();
+        CreateMap<ScanTask, ScanTaskModelDto>();
     }
 }

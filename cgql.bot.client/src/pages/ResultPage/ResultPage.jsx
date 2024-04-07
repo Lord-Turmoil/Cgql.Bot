@@ -11,13 +11,29 @@ import { Results } from '~/parts/Results/Results';
 import './ResultPage.css';
 import { LoadCircle } from '~/components/LoadCircle/LoadCircle';
 import api from '~/services/api';
+import stall from '~/services/stall';
 
 export function ResultPage() {
     const [queryParams] = useSearchParams()
     const params = useParams();
 
     const [online, setOnline] = useState(false);
-    const [result, setResult] = useState();
+    const [data, setData] = useState();
+    const [info, setInfo] = useState();
+
+    useEffect(() => {
+        if (data !== undefined) {
+            setInfo({
+                repository: data.task.repository.fullName,
+                repositoryUrl: data.task.repository.htmlUrl,
+                branch: data.task.ref.substring(data.task.ref.lastIndexOf('/') + 1),
+                branchUrl: data.task.repository.htmlUrl + '/tree/' + data.task.ref.substring(data.task.ref.lastIndexOf('/') + 1),
+                commit: data.task.commit.sha.substring(0, 10),
+                commitUrl: data.task.repository.htmlUrl + '/commits/' + data.task.commit.sha,
+
+            });
+        }
+    }, [data]);
 
     const [id, setId] = useState(params.id);
     const [key, setKey] = useState();
@@ -46,17 +62,17 @@ export function ResultPage() {
                 <title>Scan Result</title>
             </Helmet>
             <InflateBox overflow={true}>
-                <LogoNav online={online} />
+                <LogoNav data={info} online={online} />
                 <hr />
-                {result === undefined
+                {data === undefined
                     ? <LoadCircle sx={{ height: "100px", marginTop: "10%" }} />
-                    : result === null ? <h1>404 Not Found</h1>
+                    : data === null ? <h1>404 Not Found</h1>
                         : <div>
-                            <LanguageNav language='python' id={id} />
+                            <LanguageNav language='python' id={data.task.id} />
                             <div className='ResultPage__content'>
-                                {renderOverview(result.queryCount, result.bugCount, result.totalTime)}
+                                {renderOverview(data.result.queryCount, data.result.bugCount, data.task.duration)}
                             </div>
-                            <Results results={result.results}></Results>
+                            <Results results={data.result.results}></Results>
                         </div>
                 }
                 <Footer setOnline={setOnline} />
@@ -64,22 +80,42 @@ export function ResultPage() {
         </div>
     )
 
+    function formatMillisecondDuration(duration) {
+        if (duration < 60000) {
+            return <span><b>{duration / 1000}</b>s</span>;
+        } else {
+            const m = Math.floor(duration / 60000);
+            const s = Math.floor(duration - m * 60000);
+            return <span><b>{m}</b>m<b>{s}</b>s</span>;
+        }
+    }
+
+    function formatSecondDuration(duration) {
+        if (duration < 60) {
+            return <span><b>{duration.toFixed(3)}</b>s</span>;
+        } else {
+            const m = Math.floor(duration / 60);
+            const s = Math.floor(duration - m * 60);
+            return <span><b>{m}</b>m<b>{s}</b>s</span>;
+        }
+    }
+
     function renderOverview(queryCount, bugCount, timeCost) {
         return (
             <div className='ResultPage__overview'>
                 <h2>Overview</h2>
                 {bugCount === 0
                     ? <p><b style={{ color: "greenyellow" }}>Congratulations!</b> No potential bugs found in your repository.</p>
-                    : <p>We've ran <b>{queryCount}</b> queries on your repository in <b>{timeCost / 1000.0}</b>s, and found <b style={{ color: "red" }}>{bugCount}</b> potential bugs.</p>
+                    : <p>We've ran <b>{queryCount}</b> queries on your repository in {formatSecondDuration(timeCost)}, and found <b style={{ color: "red" }}>{bugCount}</b> potential bugs.</p>
                 }
             </div>
         )
     }
 
     async function populateResult(id, key) {
-        const dto = await api.get('/api/Result/' + id, { key: key });
+        const dto = await stall(api.get('/api/Result/' + id, { key: key }), 2000);
         if (dto.meta.status === 0) {
-            setResult(dto.data);
+            setData(dto.data);
         } else {
             setError(dto.meta.message);
         }
