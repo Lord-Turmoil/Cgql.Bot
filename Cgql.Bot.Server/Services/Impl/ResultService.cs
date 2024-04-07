@@ -35,7 +35,7 @@ public class ResultService : BaseService<ResultService>, IResultService
                 .Include(t => t.Repository).ThenInclude(r => r.Owner)
                 .Include(t => t.Pusher)
                 .Include(t => t.Sender)
-            );
+        );
 
         if (task == null)
         {

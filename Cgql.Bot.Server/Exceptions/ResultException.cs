@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace Cgql.Bot.Server.Exceptions;
+﻿namespace Cgql.Bot.Server.Exceptions;
 
 public class ResultException : Exception
 {
@@ -8,10 +6,8 @@ public class ResultException : Exception
     {
         Error,
         NotFound,
-        Other,
+        Other
     }
-
-    public Types Type { get; set; }
 
     public ResultException(Types type)
     {
@@ -27,4 +23,6 @@ public class ResultException : Exception
     {
         Type = type;
     }
+
+    public Types Type { get; set; }
 }
