@@ -10,7 +10,7 @@ namespace Cgql.Bot.Server.Daemon.Impl;
 /// </summary>
 public class ScanDaemon : IScanDaemon
 {
-    private const int MaxThreads = 5;
+    private const int MaxThreads = 1;
     private const int MaxSemaphore = 128;
 
     private readonly ILogger<ScanDaemon> _logger;
