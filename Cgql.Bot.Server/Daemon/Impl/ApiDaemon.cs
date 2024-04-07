@@ -34,19 +34,6 @@ public class ApiDaemon : IApiDaemon
 
     public void SendResult(ResultDto result)
     {
-        ScanTask task = result.Value;
-        if (task.Commit == null)
-        {
-            _logger.LogError("Task {Id} has no commit", task.Id);
-            return;
-        }
-
-        if (task.Repository == null)
-        {
-            _logger.LogError("Task {Id} has no repository", task.Id);
-            return;
-        }
-
         switch (result.Status)
         {
             case ResultDto.ScanStatus.Success:
@@ -61,12 +48,12 @@ public class ApiDaemon : IApiDaemon
     private void SendSuccessResult(ResultDto result)
     {
         ScanTask task = result.Value;
-
         string url = Configuration.RootUrl + $"{task.Id}?key={task.Key}";
         string body = string.Format(File.ReadAllText("Template/SuccessEmail.html"),
             task.Commit!.AuthorName,
             task.Repository!.HtmlUrl,
             task.Repository!.FullName,
+            GetBrief(result),
             url);
 
         _emailService.SendAsync(new EmailData {
@@ -75,6 +62,15 @@ public class ApiDaemon : IApiDaemon
             Subject = "CodeGraphQL Scan Completed",
             Body = body
         });
+    }
+
+    private string GetBrief(ResultDto result)
+    {
+        return result.BugCount switch {
+            0 => "Congratulations! No bug found in your code.",
+            1 => "There's 1 bug found in your code.",
+            _ => $"A total of {result.BugCount} bugs found in your code."
+        };
     }
 
     private void SendFailedResult(ResultDto result)

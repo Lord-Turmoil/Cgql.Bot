@@ -132,8 +132,8 @@ public class ScanAgent
             Value = task,
             Result = scanResult,
             Status = ResultDto.ScanStatus.Success,
-            BugCount = 0,
-            QueryCount = 0,
+            BugCount = dto.BugCount,
+            QueryCount = dto.QueryCount,
             Message = "Scan completed."
         };
     }
