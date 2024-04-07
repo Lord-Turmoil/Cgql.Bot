@@ -1,7 +1,9 @@
 .NavBar {
     height: 50px;
+    width: 95%;
+    margin: 0 auto;
     line-height: 50px;
-    padding: 10px 20px;
+    padding: 10px;
 }
 
 .NavBar__logo {
