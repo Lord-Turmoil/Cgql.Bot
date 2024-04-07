@@ -7,7 +7,8 @@ public class ResultException : Exception
     public enum Types
     {
         Error,
-        NotFound
+        NotFound,
+        Other,
     }
 
     public Types Type { get; set; }

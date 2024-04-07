@@ -39,30 +39,29 @@ public class ResultService : BaseService<ResultService>, IResultService
 
         if (task == null)
         {
-            throw new ResultException(ResultException.Types.NotFound, "Requested scan result doesn't exist");
+            throw new ResultException(ResultException.Types.NotFound, "Requested scan result doesn't exist.");
         }
 
         if (!task.Finished)
         {
-            throw new ResultException(ResultException.Types.Error, "Requested scan not completed yet");
+            throw new ResultException(ResultException.Types.Error, "Requested scan not completed yet.");
         }
 
         if (task.Status == false)
         {
-            throw new ResultException(ResultException.Types.Error,
-                $"Requested scan encountered one or more errors: {task.Message}");
+            throw new ResultException(ResultException.Types.Error, $"{task.Message}.");
         }
 
         ScanResult? result = await _resultRepo.FindAsync(task.Id);
         if (result?.Data == null)
         {
-            throw new Exception("Request scan doesn't have a result");
+            throw new ResultException(ResultException.Types.Other, "Request scan doesn't have a result.");
         }
 
         var dto = JsonConvert.DeserializeObject<ScanResultDto>(result.Data);
         if (dto == null)
         {
-            throw new Exception("Failed to get scan result");
+            throw new ResultException(ResultException.Types.Other, "Failed to get scan result.");
         }
 
         return new CompleteResultDto {

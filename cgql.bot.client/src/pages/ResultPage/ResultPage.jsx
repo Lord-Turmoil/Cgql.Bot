@@ -46,7 +46,7 @@ export function ResultPage() {
         if (queryParams.has('key')) {
             setKey(queryParams.get('key'));
         } else {
-            navigate('/404');
+            setError([false, "No key provided in the query string!"]);
         }
     }, [queryParams]);
 
@@ -122,8 +122,13 @@ export function ResultPage() {
     function renderError(message) {
         return (
             <div className='ResultPage__error'>
-                <h2>One or more errors occurred when we scan your repository!</h2>
-                <p>{message}</p>
+                {message[0] ?
+                    <div>
+                        <h2>One or more errors occurred when we scan your repository!</h2>
+                        <p>{message}</p>
+                    </div>
+                    : <h2>{message}</h2>
+                }
             </div>
         )
     }
@@ -135,7 +140,7 @@ export function ResultPage() {
         } else if (dto.meta.status === 404) {
             navigate('/404');
         } else {
-            setError(dto.meta.message);
+            setError([true, dto.meta.message]);
         }
     }
 }

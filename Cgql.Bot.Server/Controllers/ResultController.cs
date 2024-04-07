@@ -33,6 +33,8 @@ public class ResultController : BaseController<ResultController>
             return e.Type switch {
                 ResultException.Types.NotFound => new OkResponse(new NotFoundDto(e.Message)),
                 ResultException.Types.Error => new OkResponse(new BadRequestDto(e.Message)),
+                ResultException.Types.Other => new OkResponse(new InternalServerErrorDto(
+                    $"It's not you, it's us: {e.Message}")),
                 _ => new OkResponse(new InternalServerErrorResponse(e.Message))
             };
         }
