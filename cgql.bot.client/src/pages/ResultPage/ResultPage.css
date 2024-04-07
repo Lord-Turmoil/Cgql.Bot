@@ -1,13 +1,22 @@
-.ResultPage {}
-
 .ResultPage__content {
     width: 90%;
     margin: 0 auto;
 }
+
 .ResultPage__overview {
     margin: 10px 0;
 }
 
 .ResultPage__overview p {
     text-indent: 2em;
+}
+
+.ResultPage__error {
+    text-align: center;
+    margin-top: 10%;
+    line-height: 2.5;
+}
+
+.ResultPage__error h2 {
+    color: red;
 }

@@ -1,6 +1,6 @@
 import InflateBox from '~/components/InflateBox';
 import { Helmet } from 'react-helmet';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 
 import LogoNav from '~/parts/LogoNav/LogoNav';
 import LanguageNav from '~/parts/LanguageNav/LanguageNav';
@@ -14,6 +14,8 @@ import api from '~/services/api';
 import stall from '~/services/stall';
 
 export function ResultPage() {
+    const navigate = useNavigate();
+
     const [queryParams] = useSearchParams()
     const params = useParams();
 
@@ -44,7 +46,7 @@ export function ResultPage() {
         if (queryParams.has('key')) {
             setKey(queryParams.get('key'));
         } else {
-            setError("Missing key in query parameters.");
+            navigate('/404');
         }
     }, [queryParams]);
 
@@ -65,15 +67,20 @@ export function ResultPage() {
                 <LogoNav data={info} online={online} />
                 <hr />
                 {data === undefined
-                    ? <LoadCircle sx={{ height: "100px", marginTop: "10%" }} />
-                    : data === null ? <h1>404 Not Found</h1>
-                        : <div>
+                    ? (
+                        error === undefined
+                            ? <LoadCircle sx={{ height: "100px", marginTop: "10%" }} />
+                            : renderError(error)
+                    )
+                    : (
+                        <div>
                             <LanguageNav language='python' id={data.task.id} />
                             <div className='ResultPage__content'>
                                 {renderOverview(data.result.queryCount, data.result.bugCount, data.task.duration)}
                             </div>
                             <Results results={data.result.results}></Results>
                         </div>
+                    )
                 }
                 <Footer setOnline={setOnline} />
             </InflateBox>
@@ -112,10 +119,21 @@ export function ResultPage() {
         )
     }
 
+    function renderError(message) {
+        return (
+            <div className='ResultPage__error'>
+                <h2>One or more errors occurred when we scan your repository!</h2>
+                <p>{message}</p>
+            </div>
+        )
+    }
+
     async function populateResult(id, key) {
         const dto = await stall(api.get('/api/Result/' + id, { key: key }), 2000);
         if (dto.meta.status === 0) {
             setData(dto.data);
+        } else if (dto.meta.status === 404) {
+            navigate('/404');
         } else {
             setError(dto.meta.message);
         }
