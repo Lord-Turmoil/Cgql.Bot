@@ -1,0 +1,32 @@
+.HomeFrame {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+.HomeFrame__wrapper {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.HomeFrame__content_wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.HomeFrame__title_wrapper {
+    margin: 20px;
+}
+
+.HomeFrame__description_wrapper {
+    flex: 1;
+}
+
+.HomeFrame__description_wrapper p img {
+    height: 2em;
+    vertical-align: middle;
+}
